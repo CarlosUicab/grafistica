@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+{% load i18n static %}
+  <head>
+    <link href="{% static 'img/favicon-grafistica.png' %}" rel="icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Grafística</title>
+  </head>
+  <body>
+    <section class="material-half-bg">
+      <div class="cover"></div>
+    </section>
+    <section class="login-content">
+{#      <div class="logo">#}
+{#        <h1>Grafística</h1>#}
+{#      </div>#}
+      <div class="login-box">
+        <form class="login-form" action="." method="post">
+             {% csrf_token %}
+            {% if next_url %}
+                        <input type="hidden" name="next" value="{{ next_url }}">
+            {% endif %}
+            <a href="/">
+                <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Grafística</h3>
+            </a>
+          <div class="form-group">
+            <label class="control-label">{% trans 'CORREO' %}</label>
+            <input class="form-control" name="email" type="email" placeholder="{% trans 'Correo'%}" autofocus>
+               {% for error in form.email.errors %}
+                                <div style="margin-top: 10px">
+                                    <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                                </div>
+                {% endfor %}
+          </div>
+          <div class="form-group">
+            <label class="control-label">{% trans 'CONTRASEÑA' %}</label>
+            <input class="form-control" name="password" type="password" placeholder="{% trans 'Contraseña'%}">
+              {% for error in form.password.errors %}
+                                <div style="margin-top: 10px">
+                                    <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                                </div>
+               {% endfor %}
+          </div>
+{#          <div class="form-group">#}
+{#            <div class="utility">#}
+{#              <div class="animated-checkbox">#}
+{#                <label>#}
+{#                  <input type="checkbox"><span class="label-text">{% trans 'Mantener sesión' %}</span>#}
+{#                </label>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+          <div class="form-group btn-container">
+            <input type="submit" class="btn btn-primary btn-block" value="{% trans 'Entrar' %}">
+               <p class="semibold-text mb-2"><a href="{% url 'account_reset_password' %}">{% trans 'Recuperar contraseña' %}</a></p>
+
+          </div>
+        <div class="form-group text-center">
+            <label style="padding: 0px; margin: 0px">¿No tienes cuenta?</label>
+              <p class="semibold-text mb-2"><a  href="{% url 'account_signup' %}">{% trans 'Registrate' %}</a></p>
+        </div>
+        </form>
+
+
+      </div>
+    </section>
+    <!-- Essential javascripts for application to work-->
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="{% static 'js/plugins/pace.min.js' %}"></script>
+    <script type="text/javascript">
+      // Login Page Flipbox control
+      $('.login-content [data-toggle="flip"]').click(function() {
+      	$('.login-box').toggleClass('flipped');
+      	return false;
+      });
+    </script>
+  </body>
+</html>

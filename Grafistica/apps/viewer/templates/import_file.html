@@ -1,0 +1,338 @@
+{% extends 'base_admin.html' %}
+{% load i18n static %}
+ {% block extra-css %}
+ {% endblock extra-css %}
+{% block container %}
+    <div id="app" v-cloak>
+        <div class="bs-component">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link {% if step != 1 %} disabled {% else %} active show {% endif %}"
+                                        data-toggle="tab"
+                                        href="#upload">{% trans 'Cargar Excel' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 2 %} disabled {% else %} active show {% endif %}"
+                                        data-toggle="tab"
+                                        href="#preview">{% trans 'Visualización de datos' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 3 %}disabled {% else %} active show  {% endif %}"
+                                        data-toggle="tab" href="#graph">{% trans 'Gráfica' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 4 %}disabled {% else %} active show  {% endif %}"
+                                        data-toggle="tab" href="#columns">{% trans 'Columnas' %}</a></li>
+{#                <li class="nav-item"><a class="nav-link {% if step != 5 %}disabled {% else %} active show  {% endif %}"#}
+{#                                        data-toggle="tab" href="#dowloand">{% trans 'Descargar' %}</a></li>#}
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade {% if step == 1 %} active show  {% endif %}" id="upload">
+                    <h3 class="center"
+                        style="margin-top: 30px; margin-bottom: 30px">{% trans 'Paso 1. Carga tu archivo de excel. ' %}</h3>
+                    <form action="." id="myform" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <input class="form-control" id="myfile" name="myfile" type="file">
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-outline-secondary">{% trans 'Procesar y continuar' %}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade {% if step == 2 %} active show  {% endif %}" id="preview">
+
+                    <div id="loading" class="overlay" >
+                        <div class="m-loader mr-4" style="position: absolute; top: 10px;">
+                            <svg class="m-circular" viewBox="25 25 50 50">
+                                <circle  class="path" cx="50" cy="50" r="20" fill="none" stroke-width="4"
+                                        stroke-miterlimit="10"></circle>
+                            </svg>
+                        </div>
+                        <h3 class="l-text" style="position: absolute; top: 30px;">{% trans 'Cargando ....' %}</h3>
+                    </div>
+
+                    <h3 class="center"
+                        style="margin-top: 30px; margin-bottom: 30px">{% trans 'Paso 2. Previsualización y limpieza de datos. ' %}</h3>
+                    <div class="form-group" id="divContent" style="margin-top: 20px">
+                        <div class="form-group pull-right">
+                        <form action="." id="frmenviarjson" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" id="jsondata_prev" name="jsondata">
+                            <input type="hidden" id="accion" name="accion" value="1">
+                            <input type="hidden" name="filename" id="filename" value="{{ myfile }}">
+                            <button type="button" @click="makepost()" class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                        </form>
+                    </div>
+                        {% verbatim %}
+                        <div class="table-responsive" v-if="!filteractive">
+                            <div style="margin-bottom: 15px" class="pull-left">
+                                <button class="btn btn-danger btn-sm" @click="removeAllFilter" v-if="filter.name!==''"><i class="fa fa-minus"></i> Quitar filtros</button>
+                            </div>
+                            <table class="table" v-if="data_json.schema">
+                                <thead>
+                                <tr>
+                                    <th>Acciones</th>
+                                    <th v-for="column in data_json.schema.fields" v-if="column.name!='index'">{{ column.name }} <a href="#" @click="filterByColumn(column.name,column.type)"><i class="fa fa-filter"></i></a> </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(rows,index) in data_json.data">
+                                    <td>
+                                        <button class="btn-outline-danger  btn-sm" @click="deleteItem(index)">Eliminar</button>
+                                    </td>
+                                    <template v-for="(row,key) in rows">
+                                        <td v-if="key!='index'"> <input @change="changevalue(index,key,row)" v-model="row"></td>
+                                    </template>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div v-else>
+                            <h3>Filtro para {{ filter.name }}</h3>
+                            <h5>Tipo de dato: "{{ filter.type }}"</h5>
+
+                            <select v-model="filtersnumber" :disabled="empty" v-if="filter.type==='number'">
+                                <option value="=">Igual a</option>
+                                <option value=">=">Mayor o igual a</option>
+                                <option value="<=">Menor o igual a</option>
+                                <option value="<>">Diferente a</option>
+                            </select>
+
+                            <select v-model="filterstext" :disabled="empty" v-if="filter.type==='string'">
+                                <option value="=">Igual a</option>
+                                <option value="*">Contiene</option>
+                                <option value=">=">Empieza con</option>
+                                <option value="<>">Diferente a</option>
+                            </select>
+                            <input type="text" :disabled="empty" v-model="datafilter">
+                              <label  for="vacio">Quitar vacío</label>
+                            <input v-model="empty" @change="limpiar()"  type="checkbox">
+
+
+                            <hr>
+                            <button class="btn btn-danger" @click="filteractive=false">Cancelar</button>
+                            <button class="btn btn-primary" @click="filterdata(datafilter)">Aplicar filtro</button>
+                        </div>
+                        {% endverbatim %}
+                    </div>
+                    <div class="form-group text-right">
+                        <form action="." id="frmenviarjson" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" id="jsondata_prev" name="jsondata">
+                            <input type="hidden" id="accion" name="accion" value="1">
+                            <input type="hidden" name="filename" id="filename" value="{{ myfile }}">
+                            <button type="button" @click="makepost()" class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade {% if step == 3 %} active show  {% endif %}" id="graph">
+                    <form action="." method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="filename" id="filename" value="{{ myfile }}">
+                        <input type="hidden" id="accion" name="accion" value="2">
+                        <div id="formulario">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/chart.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="1"><span
+                                                class="label-text">{% trans 'Line Chart - Logarithmic' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/chart2.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="2"><span
+                                                class="label-text">{% trans 'Chart - Doughnut.' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/BASIC.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="3"><span
+                                                class="label-text">{% trans 'Line Chart - Logarithmic' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/LINEA_CON_AREA.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="4"><span
+                                                class="label-text">{% trans 'Chart - Doughnut.' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/MULTIEJES.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="5"><span
+                                                class="label-text">{% trans 'Line Chart - Logarithmic' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/VERTICAL.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="6"><span
+                                                class="label-text">{% trans 'Chart - Doughnut.' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/Scatter_Chart.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="7"><span
+                                                class="label-text">{% trans 'Line Chart - Logarithmic' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/EJE_Y_NO_NUMERICO.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="8"><span
+                                                class="label-text">{% trans 'Chart - Doughnut.' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" id="siguiente"
+                                    class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade {% if step == 4 %} active show  {% endif %}" id="columns">
+                    <div class="row" style="padding-top: 30px">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    {% trans 'Columnas' %}
+                                </div>
+                                <div class="card-body" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                    {% for element in json_columns %}
+                                        <div class="row" style="margin: 10px">
+                                            <button class="btn btn-primary btn-sm" draggable="true"
+                                                    ondragstart="drag(event)" id="{{ element }}"
+                                                    style="height: 30px; width: 200px"
+                                                    type="button">{{ element }}</button>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header text-center">
+                                    {% trans 'Eje X' %}
+                                </div>
+                                <div class="card-body" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header text-center">
+                                    {% trans 'Eje Y' %}
+                                </div>
+                                <div class="card-body" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 50px">
+                        <canvas id="myChart">
+                        </canvas>
+                    </div>
+                    <div class="form-group text-right">
+                        <button type="submit" id="siguiente" class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade {% if step == 5 %} active show  {% endif %}" id="dowloand">
+                    HOLA DESCARGA
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para los filtros -->
+        <div class="modal" tabindex="-1" role="dialog" id="ModalFilter">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Filtrar' %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin-left: 20px">
+                            <div class="animated-radio-button">
+                                <label>
+                                    <input type="radio" id="radio" name="radio" value="1"><span
+                                        class="label-text">{% trans 'Eliminar las filas en las cuales:' %}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 20px">
+                            <div class="animated-radio-button">
+                                <label>
+                                    <input type="radio" id="radio" name="radio" value="1"><span
+                                        class="label-text">{% trans 'Mostrar las filas en las cuales:' %}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="margin-left: 20px">
+                            <div class="col-md-6">
+                                <select class="form-control" name="filtroA" id="filtroA">
+                                    <option value="">{% trans 'Es igual a:' %}</option>
+                                    <option value="">{% trans 'No es igual a:' %}</option>
+                                    <option value="">{% trans 'Es posterior a:' %}</option>
+                                    <option value="">{% trans 'Es posterior o igual a:' %}</option>
+                                    <option value="">{% trans 'Es anterior a:' %}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock container %}
+{% block extra-js %}
+    <script>
+        {% if step == 2 %}
+             my_json = {{ data.json|safe }};
+        {% else  %}
+             my_json = {};
+        {% endif %}
+    </script>
+    <script src="{% static 'dist_g/bundle/importdata.js' %}"></script>
+    <script>
+        window.onload = function () {
+            document.getElementById('loading').style.visibility = "hidden";
+        };
+    </script>
+
+{% endblock extra-js %}

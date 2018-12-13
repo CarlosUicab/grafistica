@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load i18n static %}
+<head>
+    <meta charset="utf-8">
+    <title>Grafística</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon-grafistica.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700"
+          rel="stylesheet">
+
+    <!-- Bootstrap CSS File -->
+    <link href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Libraries CSS Files -->
+    <link href="{% static 'lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/ionicons/css/ionicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+
+    <!-- Main Stylesheet File -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- =======================================================
+      Theme Name: BizPage
+      Theme URL: https://bootstrapmade.com/bizpage-bootstrap-business-template/
+      Author: BootstrapMade.com
+      License: https://bootstrapmade.com/license/
+    ======================================================= -->
+</head>
+
+<body>
+
+<!--==========================
+  Header
+============================-->
+<header id="header">
+    <div class="container-fluid">
+
+        <div id="logo" class="pull-left">
+            <h1><a href="#intro" class="scrollto">Grafística</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
+        </div>
+
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li class="menu-active"><a href="#intro">{% trans 'Inicio' %}</a></li>
+                <li><a href="#about">{% trans 'Acerca de' %}</a></li>
+                <li><a href="#services">{% trans '¿Como funciona?' %}</a></li>
+                <li><a href="#team">{% trans 'Equipo' %}</a></li>
+                <li><a href="#contact">{% trans 'Contacto' %}</a></li>
+                <li><a href="{% url 'viewer:login' %}">{% trans 'Login' %}</a></li>
+            </ul>
+        </nav><!-- #nav-menu-container -->
+    </div>
+</header><!-- #header -->
+
+<!--==========================
+  Intro Section
+============================-->
+<section id="intro">
+    <div class="intro-container">
+        <div id="introCarousel" class="carousel  slide carousel-fade" data-ride="carousel">
+
+            <ol class="carousel-indicators"></ol>
+
+            <div class="carousel-inner" role="listbox">
+
+                <div class="carousel-item active">
+                    <div class="carousel-background"><img src="{% static 'img/intro-carousel/1.jpg' %}" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2>{% trans '¿Que es Grafística?' %}</h2>
+                            <p>{% trans 'Grafística es un marco de visualización de datos de código abierto creado con el objetivo de hacer que la representación visual de datos complejos sea fácil para todos.' %}</p>
+                            <a href="#about" class="btn-get-started scrollto">{% trans 'Acerca de' %}</a>
+                        </div>
+                    </div>
+                </div>
+
+{#                <div class="carousel-item">#}
+{#                    <div class="carousel-background"><img src="{% static 'img/intro-carousel/2.jpg' %}" alt=""></div>#}
+{#                    <div class="carousel-container">#}
+{#                        <div class="carousel-content">#}
+{#                            <h2>{% trans '¿Por qué graficar?' %}</h2>#}
+{#                            <p>{% trans 'Un gráfico es muy eficaz a la hora de mostrar información, pues tiende a llamar la atención, más que otras opciones para presentar datos, como las tablas o diagramas.' %}</p>#}
+{#                            <a href="#about" class="btn-get-started scrollto">{% trans 'Acerca de' %}</a>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
+                <div class="carousel-item">
+                    <div class="carousel-background"><img src="{% static 'img/intro-carousel/3.jpg' %}" alt=""></div>
+                    <div class="carousel-container">
+                        <div class="carousel-content">
+                            <h2>{% trans 'Historia' %}</h2>
+                            <p>{% trans 'Grafística comenzó como un proyecto escolar y al final se ha transformado en uno de los sitios más importantes en la visualización de datos.' %}</p>
+                            <a href="#about" class="btn-get-started scrollto">{% trans 'Acerca de' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a class="carousel-control-prev" href="#introCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon ion-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="carousel-control-next" href="#introCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon ion-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+
+        </div>
+    </div>
+</section><!-- #intro -->
+
+<main id="main">
+
+    <!--==========================
+      About Us Section
+    ============================-->
+    <section id="about">
+        <div class="container">
+
+            <header class="section-header">
+                <h3>{% trans 'Acerca de' %}</h3>
+                <p>{% trans 'Grafística es un marco de visualización de datos de código abierto creado con el objetivo de hacer que la representación visual de datos complejos sea fácil para todos.' %}</p>
+            </header>
+
+            <div class="row about-cols">
+
+                <div class="col-md-4 wow fadeInUp">
+                    <div class="about-col">
+                        <div class="img">
+                            <img src="{% static 'img/about-mission.jpg' %}" alt="" class="img-fluid">
+                            <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
+                        </div>
+                        <h2 class="title"><a href="#">{% trans 'Misión' %}</a></h2>
+                        <p>
+                            {% trans 'Nuestra misión es ayudar a las empresas a tomar decisiones de mánera rápida y sencilla por medio de gráficas.' %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="about-col">
+                        <div class="img">
+                            <img src="{% static 'img/about-plan.jpg' %}" alt="" class="img-fluid">
+                            <div class="icon"><i class="ion-ios-list-outline"></i></div>
+                        </div>
+                        <h2 class="title"><a href="#">{% trans 'Plan' %}</a></h2>
+                        <p>
+                            {% trans 'Grafística comenzó como un proyecto escolar y muy pronto se convertirá en un proyecto muy útil para las empresas' %}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="about-col">
+                        <div class="img">
+                            <img src="{% static 'img/about-vision.jpg' %}" alt="" class="img-fluid">
+                            <div class="icon"><i class="ion-ios-eye-outline"></i></div>
+                        </div>
+                        <h2 class="title"><a href="#">{% trans 'Visión' %}</a></h2>
+                        <p>
+                            {% trans 'Ser el mejor sitio para la visualización de datos de código abierto en todo México y toda América Latina ' %}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- #about -->
+
+    <!--==========================
+      Services Section
+    ============================-->
+    <section id="services">
+        <div class="container">
+
+            <header class="section-header wow fadeInUp">
+                <h3>{% trans 'Funcionalidad' %}</h3>
+                <p>{% trans 'Para comenzar a utilizar el sistema, siga los siguientes pasos que a continuación se mencionan.' %}</p>
+            </header>
+
+            <div class="row">
+                <div class="static_inner">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="static_main_content">
+                                <div class="static_text">
+                                    <h4>{% trans '1.- Cargar el archivo Excel desde su PC.' %}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="static_img">
+                                <img class="rounded mx-auto d-block" src="{% static 'img/pasos/PASO1.png' %}"
+                                     height="400px" width="695px">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="padding-top: 40px">
+                        <div class="col-md-8">
+                            <div class="static_img">
+                                <img class="rounded mx-auto d-block" src="{% static 'img/pasos/PASO2.png' %}"
+                                     height="400px" width="695px">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="static_main_content">
+                                <div class="static_text">
+                                    <h4>{% trans '2.- Previsualizar y limpiar contenido del Excel.' %}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="padding-top: 40px">
+                        <div class="col-md-4">
+                            <div class="static_main_content">
+                                <div class="static_text">
+                                    <h4>{% trans '3.- Seleccionar tipo de gráfica.' %}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="static_img">
+                                <img class="rounded mx-auto d-block" src="{% static 'img/pasos/PASO3.png' %}"
+                                     height="400px" width="695px">
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="padding-top: 40px">
+                        <div class="col-md-8">
+                            <div class="static_img">
+                                <img class="rounded mx-auto d-block" src="{% static 'img/pasos/PASO4.png' %}"
+                                     height="400px"
+                                     width="695px">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="static_main_content">
+                                <div class="static_text">
+                                    <h4>{% trans '4.- Configuración de contenido a visualizar.' %}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="padding-top: 40px">
+                        <div class="col-md-4">
+                            <div class="static_main_content">
+                                <div class="static_text">
+                                    <h4>{% trans '5.- Generación y visualización de la gráfica.' %}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="static_img">
+                                <img class="rounded mx-auto d-block" src="{% static 'img/pasos/PASO5.png' %}"
+                                     height="400px"
+                                     width="695px">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--   <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
+                 <h4 class="title"><a href="">Lorem Ipsum</a></h4>
+                 <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+               </div>
+               <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
+                 <h4 class="title"><a href="">Dolor Sitema</a></h4>
+                 <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+               </div>
+               <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+                 <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+                 <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+               </div>
+               <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-speedometer-outline"></i></div>
+                 <h4 class="title"><a href="">Magni Dolores</a></h4>
+                 <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+               </div>
+               <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-barcode-outline"></i></div>
+                 <h4 class="title"><a href="">Nemo Enim</a></h4>
+                 <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+               </div>
+               <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-delay="0.1s" data-wow-duration="1.4s">
+                 <div class="icon"><i class="ion-ios-people-outline"></i></div>
+                 <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
+                 <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
+               </div>-->
+
+        </div>
+
+        </div>
+    </section><!-- #services -->
+
+    <!--==========================
+      Skills Section
+    ============================-->
+    <section id="skills">
+        <div class="container">
+
+            <header class="section-header">
+                <h3>Nuestros Skills</h3>
+                <p>{% trans 'Grafística tiene un equipo de expertos, estos son algunos de los conocimientos que se usaron para el desarrollo del sitio' %}</p>
+            </header>
+
+            <div class="skills-content">
+
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span class="skill">HTML <i class="val">100%</i></span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span class="skill">Python/Django <i class="val">100%</i></span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar bg-info" role="progressbar" aria-valuenow="90" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span class="skill">CSS <i class="val">90%</i></span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span class="skill">JavaScript <i class="val">75%</i></span>
+                    </div>
+                </div>
+
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" aria-valuenow="55" aria-valuemin="0"
+                         aria-valuemax="100">
+                        <span class="skill">Vuejs <i class="val">55%</i></span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!--==========================
+      Team Section
+    ============================-->
+    <section id="team">
+        <div class="container">
+            <div class="section-header wow fadeInUp">
+                <h3>{% trans 'Equipo' %}</h3>
+                <p>{% trans 'Conoce a nuestros expertos' %}</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s"></div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="member">
+                        <img src="{% static 'img/team/gimer-cervera.jpeg' %}" class="img-fluid" style="height: 300px; width: 260px">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Dr. Gimer Amilcar Cervera Evia</h4>
+                                <span>Sponsor</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="member">
+                        <img src="{% static 'img/keren.jpeg' %}" class="img-fluid" style="height: 300px; width: 260px">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Keren A. Saint-Hilaire</h4>
+                                <span>Project Manager</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s"></div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 wow fadeInUp">
+                    <div class="member">
+                        <img src="{% static 'img/carlos.jpeg' %}" class="img-fluid" style="height: 290px; width: 260px"
+                             alt="">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Carlos Uicab</h4>
+                                <span>Programador Back End</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/carlos.uicab.16" target="_blank"><i
+                                            class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 wow fadeInUp">
+                    <div class="member">
+                        <img src="{% static 'img/bloggif_5bd69b968f477.jpeg' %}" class="img-fluid"  style="height: 290px; width: 260px">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Diego Arcos</h4>
+                                <span>Programador Front End</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href="https://www.facebook.com/diego.arcos.12914" target="_blank"><i
+                                            class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 wow fadeInUp">
+                    <div class="member">
+                        <img src="{% static 'img/team/bonilla.jpeg' %}" class="img-fluid" style="height: 290px; width: 260px">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Luis Bonilla</h4>
+                                <span>Diseñador</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="member">
+                        <img src="{% static 'img/bloggif_5bd69c2f3bd3f.jpeg' %}" class="img-fluid" style="height: 290px; width: 260px">
+                        <div class="member-info">
+                            <div class="member-info-content">
+                                <h4>Leonard Barthelemy</h4>
+                                <span>Analista</span>
+                                <div class="social">
+                                    <a href=""><i class="fa fa-twitter"></i></a>
+                                    <a href=""><i class="fa fa-facebook"></i></a>
+                                    <a href=""><i class="fa fa-google-plus"></i></a>
+                                    <a href=""><i class="fa fa-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section><!-- #team -->
+
+    <!--==========================
+      Contact Section
+    ============================-->
+    <section id="contact" class="section-bg wow fadeInUp">
+        <div class="container">
+
+            <div class="section-header">
+                <h3>{% trans 'Contáctanos' %}</h3>
+                <p>{% trans 'Te agradecemos tu interés en contactarnos. Nos encantará poder contestar cualquier pregunta que puedas tener acerca de Grafística®' %}</p>
+            </div>
+
+            <div class="row contact-info">
+
+                <div class="col-md-4">
+                    <div class="contact-address">
+                        <i class="ion-ios-location-outline"></i>
+                        <h3>{% trans 'Dirección' %}</h3>
+                        <address>A108 col. Altabrisa, Mérida 535022, México</address>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-phone">
+                        <i class="ion-ios-telephone-outline"></i>
+                        <h3>{% trans 'Télefono' %}</h3>
+                        <p><a href="tel:+155895548855">+52 999 136 2840</a></p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-email">
+                        <i class="ion-ios-email-outline"></i>
+                        <h3>{% trans 'Correo' %}</h3>
+                        <p><a href="mailto:grafistica10b@gmail.com">grafistica10b@gmail.com</a></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form">
+                <div id="sendmessage">{% trans 'Tú mensaje ha sido enviado. Gracias' %}</div>
+                <div id="errormessage"></div>
+                {#          <form  method="post" class="contactForm">#}
+                <form action="." method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <input required type="text" name="name" class="form-control" id="name"
+                                   placeholder="{% trans 'Nombre' %}" data-rule="minlen:4"
+                                   data-msg="Please enter at least 4 chars"/>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <input required type="email" class="form-control" name="email" id="email"
+                                   placeholder="{% trans 'Correo' %}" data-rule="email"
+                                   data-msg="Please enter a valid email"/>
+                            <div class="validation"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input required type="text" class="form-control" name="subject" id="subject"
+                               placeholder="{% trans 'Asunto' %}" data-rule="minlen:4"
+                               data-msg="Please enter at least 8 chars of subject"/>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="form-group">
+                        <textarea required class="form-control" name="message" rows="5" data-rule="required"
+                                  data-msg="Please write something for us"
+                                  placeholder="{% trans 'Mensaje' %}"></textarea>
+                        <div class="validation"></div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit">{% trans 'Enviar mensaje' %}</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section><!-- #contact -->
+
+</main>
+
+<!--==========================
+  Footer
+============================-->
+<footer id="footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-3 col-md-6 footer-info">
+                    <a href="#intro">
+                        <h3 style="color: white">Grafística</h3>
+                    </a>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-links">
+                    <h4>{% trans 'Navegación' %}</h4>
+                    <ul>
+                        <li><i class="ion-ios-arrow-right"></i> <a href="#intro">{% trans 'Inicio' %}</a></li>
+                        <li><i class="ion-ios-arrow-right"></i> <a href="#about">{% trans 'Acerca de' %}</a></li>
+                        <li><i class="ion-ios-arrow-right"></i> <a href="#services">{% trans '¿Como funciona?' %}</a>
+                        </li>
+                        <li><i class="ion-ios-arrow-right"></i> <a href="#team">{% trans 'Equipo' %}</a></li>
+                        <li><i class="ion-ios-arrow-right"></i> <a href="#contact">{% trans 'Contacto' %}</a></li>
+                        <li><i class="ion-ios-arrow-right"></i> <a
+                                href="{% url 'viewer:login' %}">{% trans 'Login' %}</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-contact">
+                    <h4>{% trans 'Contáctanos' %}</h4>
+                    <p>
+                        A108 col. Altabrisa <br>
+                        Yucatán, YUC 535022<br>
+                        México <br>
+                        <strong>{% trans 'Télefono' %}:</strong> +52 999 136 2840<br>
+                        <strong>{% trans 'Correo' %}:</strong> carlos@kiub.tech<br>
+                    </p>
+
+                    <div class="social-links">
+                        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                        <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-3 col-md-6 footer-newsletter">
+                    <h4>{% trans 'Historia' %}</h4>
+                    <p>{% trans 'Grafística comenzó como un proyecto escolar y al final se ha transformado en uno de los sitios más importantes en la visualización de datos.' %}</p>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong>Grafística</strong>. Todos los derechos reservados
+        </div>
+    </div>
+</footer><!-- #footer -->
+
+<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+<!-- JavaScript Libraries -->
+<script src="{% static 'lib/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'lib/jquery/jquery-migrate.min.js' %}"></script>
+<script src="{% static 'lib/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/superfish/hoverIntent.js' %}"></script>
+<script src="{% static 'lib/superfish/superfish.min.js' %}"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+<script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+<script src="{% static 'lib/touchSwipe/jquery.touchSwipe.min.js' %}"></script>
+<!-- Contact Form JavaScript File -->
+<script src="{% static 'contactform/contactform.js' %}"></script>
+
+<!-- Template Main Javascript File -->
+<script src="{% static 'js/main.js' %}"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    {% if messages %}
+        var mensaje;
+        var mtype = "info";
+        var title = "";
+        {% for message in messages %}
+            mensaje = "{{ message }}";
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                mtype = "error";
+                title = "{% trans 'Error' %}";
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                mtype = "info";
+                title = "{% trans 'Aviso' %}";
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                mtype = "success";
+                title = "{% trans '¡Bien!' %}";
+            {% endif %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+                mtype = "warning";
+                title = "{% trans '¡Cuidado!' %}";
+            {% endif %}
+            /*new Noty({
+                text: mensaje,
+                layout: 'topRight',
+                type: mtype,
+                timeout: 2000,
+                progressBar: true
+            }).show();*/
+            swal(title, mensaje, mtype);
+        {% endfor %}
+    {% endif %}
+</script>
+
+</body>
+</html>

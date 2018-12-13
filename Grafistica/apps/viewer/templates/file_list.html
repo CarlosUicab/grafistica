@@ -1,0 +1,70 @@
+{% extends 'base_admin.html' %}
+{% load i18n static %}
+{% block container %}
+    <div id="app">
+        <h3>{% trans 'Listado de archivos' %}</h3>
+        <hr>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6 text-right">
+                <a href="{% url 'viewer:import-file' %}" class="btn btn-primary"><i class="fa fa-plus"></i> {% trans 'Agregar nuevo' %}</a>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        {% if files %}
+            {% for file in files %}
+                <div class="col-lg-4 col-md-12 col-xs-6 col-sm-6">
+                    <a href="{% url 'viewer:file-detail' file.id %}" style="text-decoration: none">
+                        <div class="widget-small info"><i class="icon fa fa-file-excel-o fa-3x"></i>
+                            <div class="info">
+                                <h4>{{ file.name }}</h4>
+                                <small>ID: {{ file.id }} / {{ file.timestamp|date:"d M, Y h:i a" }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-lg-12">
+                <p>{% trans 'Aún no existen archivos importados.' %}<br>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock container %}
+{% block extra-js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <script>
+
+        let jsonpost = '';
+        let vue = new Vue({
+            el: "#app",
+            data: {
+                data_json: {{ data.json|safe }},
+                columns: {},
+                json: {}
+            },
+            mounted: function () {
+
+            },
+            methods: {
+                deleteItem: function (index) {
+                    console.log(index)
+                },
+                getjson: function () {
+                    return JSON.stringify(data_json)
+                },
+                makepost: function () {
+                    alert('hola');
+                    let json = JSON.stringify(this.data_json);
+                    console.log('jsondata', json);
+                    document.getElementById('jsondata').value = 'hola';
+                }
+            }
+        });
+    </script>
+{% endblock extra-js %}

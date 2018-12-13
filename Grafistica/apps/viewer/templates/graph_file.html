@@ -1,0 +1,1051 @@
+{% extends 'base_admin.html' %}
+{% load i18n static %}
+{% block container %}
+    <div id="app" xmlns:v-on="http://www.w3.org/1999/xhtml">
+        <div class="bs-component">
+            <ul class="nav nav-tabs">
+                <li class="nav-item"><a class="nav-link {% if step != 1 %} disabled {% else %} active show {% endif %}"
+                                        data-toggle="tab"
+                                        href="#upload">{% trans 'Cargar Excel' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 2 %} disabled {% else %} active show {% endif %}"
+                                        data-toggle="tab"
+                                        href="#preview">{% trans 'Visualización de datos' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 3 %}enabled {% else %} active show  {% endif %}"
+                                        data-toggle="tab" href="#graph">{% trans 'Gráfica' %}</a></li>
+                <li class="nav-item"><a class="nav-link {% if step != 4 %}enabled {% else %} active show  {% endif %}"
+                                        data-toggle="tab" href="#columns">{% trans 'Columnas' %}</a></li>
+                {#                <li class="nav-item"><a class="nav-link {% if step != 5 %}disabled {% else %} active show  {% endif %}"#}
+                {#                                        data-toggle="tab" href="#dowloand">{% trans 'Descargar' %}</a></li>#}
+
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade {% if step == 3 %} active show  {% endif %}" id="graph">
+                    <form action="." method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="filename" id="filename" value="{{ myfile }}">
+                        <input type="hidden" id="accion" name="accion" value="2">
+                        <div id="formulario">
+                            <div class="row mt-lg-5">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/basicline.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="1"><span
+                                                class="label-text">{% trans 'Line Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/basic bar.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="2"><span
+                                                class="label-text">{% trans 'Bar Chart.' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-lg-5">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/column.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="3"><span
+                                                class="label-text">{% trans 'Column Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/pie.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="4"><span
+                                                class="label-text">{% trans 'Pie Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-lg-5">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/spline.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="5"><span
+                                                class="label-text">{% trans 'Spline Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/area.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="6"><span
+                                                class="label-text">{% trans 'Basic Area Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-lg-5">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/areaspline.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="7"><span
+                                                class="label-text">{% trans 'Area Spline Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/waterfall.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="8"><span
+                                                class="label-text">{% trans 'Waterfall Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="row mt-lg-5">
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/polygon.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="9"><span
+                                                class="label-text">{% trans 'Polygon Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{% static 'img/scatter.png' %}" alt="" height="200px">
+                                    <div class="animated-radio-button">
+                                        <label>
+                                            <input type="radio" id="radio" name="radio" value="10"><span
+                                                class="label-text">{% trans 'Scatter Chart' %}</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" id="siguiente"
+                                    class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade {% if step == 4 %} active show  {% endif %}" id="columns">
+                    <div class="row" style="padding-top: 30px">
+                        <div class="col-12"><h3>Chart: {{ chart.get_type_key_display }}</h3></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    {% trans 'Columnas' %}
+                                </div>
+                                {#                                <div class="card-body" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">#}
+                                <div class="card-body" id="div1">
+                                    {#                                    {% for element in json_columns %}#}
+                                    {% verbatim %}
+
+                                    <draggable v-model="columns" class="dragArea" :move="canMove"
+                                               :options="{group:'data_columns', name:'columns'}">
+                                        <div v-for="column in columns">
+                                            <div class="row" style="margin: 10px">
+                                                <button class="btn btn-primary btn-sm"
+                                                        style="height: 30px; width: 200px"
+                                                        type="button">{{ column.name }}: {{ column.type }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </draggable>
+                                    {% endverbatim %}
+                                    {#                                    {% endfor %}#}
+                                </div>
+                            </div>
+                        </div>
+                        {#                        <div class="col-md-1"></div>#}
+                        <div class="col-md-4">
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header text-center">
+                                    {% trans 'Eje X' %} *
+                                </div>
+                                <div class="card-body" id="div2">
+                                    {% verbatim %}
+                                    <div>
+                                        <span>Acepta:</span>
+                                        <span class="badge badge-info ml-1" v-for="i in x_types">{{ i }}</span>
+                                    </div>
+                                    <draggable v-model="columns_x" class="dragArea"
+                                               :options="{group:'data_columns', name:'columns_x'}">
+                                        <div v-for="column in columns_x">
+                                            <div class="row" style="margin: 10px">
+                                                <button class="btn btn-primary btn-sm"
+                                                        style="height: 30px; width: 200px"
+                                                        type="button">{{ column.name }}: {{ column.type }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </draggable>
+                                    {% endverbatim %}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header">{% trans 'Seleccionar función' %}</div>
+                                <div class="card-body">
+                                    <ul class="nav nav-pills">
+                                        <div class="form-group">
+                                            {% verbatim %}
+                                            <label for="function">Funciones</label>
+                                            <select v-model="select_option" class="form-control">
+                                                <option selected value="0">---</option>
+                                                <option value="1">Mayor</option>
+                                                <option value="2">Menor</option>
+                                                <option value="3">Promedio</option>
+                                                <option value="4">Mediana</option>
+                                                <option value="5">Varianza</option>
+                                                <option value="6">Desviación estándar</option>
+                                                <option value="7">Moda</option>
+                                                <option value="8">Primero</option>
+                                                <option value="9">Ultimo</option>
+                                            </select>
+                                            {% endverbatim %}
+                                            <div class="bs-component" style="margin-top: 10px">
+                                                <div class="alert alert-dismissible alert-info" style="padding: 5px">
+{#                                                    <button class="close" type="button" data-dismiss="alert">×</button>#}
+                                                   Esta función es <strong> opcional </strong> , omite sino desea usar alguno.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header text-center">
+                                    {% trans 'Eje Y' %} *
+                                </div>
+                                <div class="card-body" id="div3">
+                                    {% verbatim %}
+                                    <div>
+                                        <span>Acepta:</span>
+                                        <span class="badge badge-info ml-1" v-for="i in y_types">{{ i }}</span>
+                                    </div>
+                                    <draggable v-model="columns_y" class="dragArea"
+                                               :options="{group:'data_columns', name:'columns_y'}">
+                                        <div v-for="column in columns_y">
+                                            <div class="row" style="margin: 10px">
+                                                <button class="btn btn-primary btn-sm"
+                                                        style="height: 30px; width: 200px"
+                                                        type="button">{{ column.name }}: {{ column.type }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </draggable>
+                                    {% endverbatim %}
+                                </div>
+                            </div>
+                            <br>
+                            <div class="card" style="height: 250px; width: 250px">
+                                <div class="card-header text-center">
+                                    {% trans 'Nombre de la grafica' %} *
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label>{% trans 'Introducir nombre' %}</label>
+                                        <input required v-model="title_graph" type="text" class="form-control">
+                                        <div class="bs-component" style="margin-top: 10px">
+                                                <div class="alert alert-dismissible alert-info" style="padding: 5px">
+{#                                                    <button class="close" type="button" data-dismiss="alert">×</button>#}
+                                                   Título de la gráfica, en caso de dejar vacío, el sistema asignará uno por default.
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-lg-5">
+                        <div class="col-3"></div>
+                        <div class="col-6">
+                            <button type="button" id="hola" class="btn btn-block btn-info" v-show="validateXandY"
+                                    @click="buildChart">
+                                <span class="fa fa-bar-chart-o"></span>
+                                Generar {{ chart.get_type_key_display }}
+                            </button>
+                        </div>
+                        <div class="col-3"></div>
+                    </div>
+
+                    <div class="row" style="margin-top: 50px;">
+                        <div class="col-12 ">
+                            {#                            {% verbatim %}{{ this.labels }} {{ this.chart_data }}{% endverbatim %}#}
+                            <div id="chart">
+                                <div id="myChart" width="400" height="200">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div v-show="downloadAvailable" class="row" style="padding-bottom: 20px; padding-top: 20px">
+                        <div class="col-md-12">
+                            <span style="cursor: pointer; color: black" class="fa fa-clipboard fa-pull-right"
+                                  id="copiar" v-on:click="copyText(('#myCode'))"></span>
+                        </div>
+                    </div>
+                    <div class="row" v-show="downloadAvailable">
+                        {#                        <div class="col-md-12">#}
+                        {#                             <button id="buttonCode" class="col-md-2 btn info">Ver código</button><p>#}
+                        {#                        </div>#}
+                        <div class="col-12">
+                            <pre id="myCode" class="form-control"
+                                 style="height: 100px; font-size: 10px; margin-bottom: 0px">
+
+                            </pre>
+                            <small class="pull-right">{% trans 'Copie el fragmento de código anterior en su código HTML para su visualización.' %}</small>
+                        </div>
+                    </div>
+                    <div class="form-group text-right" style="margin-top: 10px">
+                        <button type="submit" id="siguiente" class="btn btn-primary">{% trans 'Siguiente' %}</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade {% if step == 5 %} active show  {% endif %}" id="dowloand">
+                    HOLA DESCARGA
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para los filtros -->
+        <div class="modal" tabindex="-1" role="dialog" id="ModalFilter">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{% trans 'Filtrar' %}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="margin-left: 20px">
+                            <div class="animated-radio-button">
+                                <label>
+                                    <input type="radio" id="radio" name="radio" value="1"><span
+                                        class="label-text">{% trans 'Eliminar las filas en las cuales:' %}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 20px">
+                            <div class="animated-radio-button">
+                                <label>
+                                    <input type="radio" id="radio" name="radio" value="1"><span
+                                        class="label-text">{% trans 'Mostrar las filas en las cuales:' %}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="margin-left: 20px">
+                            <div class="col-md-6">
+                                <select class="form-control" name="filtroA" id="filtroA">
+                                    <option value="">{% trans 'Es igual a:' %}</option>
+                                    <option value="">{% trans 'No es igual a:' %}</option>
+                                    <option value="">{% trans 'Es posterior a:' %}</option>
+                                    <option value="">{% trans 'Es posterior o igual a:' %}</option>
+                                    <option value="">{% trans 'Es anterior a:' %}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock container %}
+{% block extra-js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+    <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+    <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.15.0/vuedraggable.min.js"></script>
+    {#    <script src="{% static  'bower_components/vue/dist/vue.min.js' %}"></script>#}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+
+
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script>
+
+        // 1 = line
+        // 2 = bar
+        // 3 = pie
+        // 4 = doughnut
+        // 5 = polarArea
+
+        let jsonpost = '';
+
+
+        let vue = new Vue({
+            el: "#app",
+            data: {
+                chart_type: {{ chart.type_key }},
+                data_json: {{ data.json|safe }},
+                basicChartsIds: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                columns: [],
+                columns_x: [],
+                columns_y: [],
+                columns_group: [],
+                columns_labels: [],
+                array_group_label_final: [],
+                array_group_value_final: [],
+                array_group_json_final: [],
+                array_group_mean: [],
+                array_group_max: [],
+                array_group_min: [],
+                array_group_first: [],
+                array_group_last: [],
+                array_group_median: [],
+                json_group_count: {},
+                title_graph: "",
+                select_option: '',
+                json: {},
+                list: [{
+                    name: "John"
+                }, {
+                    name: "Joao"
+                }, {
+                    name: "Jean"
+                }],
+                list2: [{
+                    name: "Juan"
+                }, {
+                    name: "Edgard"
+                }, {
+                    name: "Johnson"
+                }],
+                basicChartTypes: {
+                    x: ['string', 'datetime', 'integer'],
+                    y: ['integer', 'number']
+                },
+                colors: [],
+                downloadAvailable: false
+            },
+            computed: {
+                validateXandY: function () {
+                    var response = false;
+                    response = this.columns_x.length === 1 && this.columns_y.length === 1;
+                    return response;
+                },
+                labels: function () {
+                    var response = [];
+                    if (this.columns_x.length > 0) {
+                        var column = this.columns_x[0];
+                        var key_for_look = column.name;
+                        this.data_json.data.forEach(function (item) {
+                            response.push(item[key_for_look]);
+                        });
+                    }
+                    return response;
+                },
+                chart_data: function () {
+                    var response = [];
+                    if (this.columns_y.length > 0) {
+                        var column = this.columns_y[0];
+                        var key_for_look = column.name;
+                        var colors = [];
+                        var dynamicColors = this.dynamicColors;
+                        this.data_json.data.forEach(function (item) {
+                            response.push(item[key_for_look]);
+                            colors.push(dynamicColors());
+                        });
+                        this.colors = colors;
+                    }
+                    return response;
+                },
+                x_types: function () {
+                    var response = [];
+                    if (this.isBasicChart) {
+                        response = this.basicChartTypes.x;
+                    }
+                    return response;
+                },
+                y_types: function () {
+                    var response = [];
+                    if (this.isBasicChart) {
+                        response = this.basicChartTypes.y;
+                    }
+                    return response;
+                },
+                chart_type_name: function () {
+                    if (this.chart_type === 1)
+                        return "line";
+                    if (this.chart_type === 2)
+                        return "bar";
+                    if (this.chart_type === 3)
+                        return "column";
+                    if (this.chart_type === 4)
+                        return "pie";
+                    if (this.chart_type === 5)
+                        return "spline";
+                    if (this.chart_type === 6)
+                        return "area";
+                    if (this.chart_type === 7)
+                        return "areaspline";
+                    if (this.chart_type === 8)
+                        return "waterfall";
+                    if (this.chart_type === 9)
+                        return "polygon";
+                    if (this.chart_type === 10)
+                        return "scatter";
+                },
+                isBasicChart: function () {
+                    return this.basicChartsIds.includes(this.chart_type);
+                }
+            },
+            mounted: function () {
+                {#console.log(this.data_json);#}
+                this.columns = this.data_json.schema.fields
+            },
+            methods: {
+                deleteItem: function (index) {
+                    console.log(index)
+                },
+                getjson: function () {
+                    return JSON.stringify(data_json)
+                },
+                makepost: function () {
+                    alert('hola');
+                    let json = JSON.stringify(this.data_json);
+                    {#console.log('jsondata',json);#}
+                    document.getElementById('jsondata').value = 'hola';
+                },
+                dynamicColors: function () {
+                    var r = Math.floor(Math.random() * 255);
+                    var g = Math.floor(Math.random() * 255);
+                    var b = Math.floor(Math.random() * 255);
+                    var response = "rgb(" + r + "," + g + "," + b + ")";
+                    return response;
+                },
+                canMove: function (evt) {
+                    {#console.log(evt.draggedContext.element.name);#}
+                    {#console.log(evt.draggedContext);#}
+                    {#console.log(evt.relatedContext);#}
+                    var response = false;
+                    var item_drag = evt.draggedContext.element;
+                    var destination_component = evt.relatedContext.component;
+                    var destination_name = destination_component.options.name;
+                    {#console.log(destination_name);#}
+                    if (destination_name === 'columns_x') {
+                        {#console.log(this.columns_x.length );#}
+                        if (this.columns_x.length > 0) {
+                            return false;
+                        }
+                        if (this.isBasicChart) {
+                            if (this.basicChartTypes.x.includes(item_drag.type)) {
+                                response = true;
+                            }
+                        }
+                    }
+                    if (destination_name === 'columns_y') {
+                        if (this.columns_y.length > 0) {
+                            return false;
+                        }
+                        if (this.isBasicChart) {
+                            if (this.basicChartTypes.y.includes(item_drag.type)) {
+                                response = true;
+                            }
+                        }
+                    }
+                    if (destination_name === 'columns_group') {
+                        {#console.log(this.columns_x.length );#}
+                        if (this.columns_group.length > 0) {
+                            return false;
+                        }
+                        if (this.isBasicChart) {
+                            if (this.basicChartTypes.x.includes(item_drag.type)) {
+                                response = true;
+                            }
+                        }
+                    }
+                    return response;
+                },
+                buildChart: function () {
+                    if (this.isBasicChart) {
+                        this.basicChart();
+                    }
+                },
+                groupByJson: function () {
+                    var contador = 0;
+                    var json_group = {};
+                    var array_group = [];
+                    var array_label_group = [];
+                    var array_data = this.chart_data;
+                    var array_label = this.labels;
+                    var json_group_count = {};
+                    var json_max = {};
+                    var json_min = {};
+                    var json_first = {};
+                    var json_last = {};
+                    var json_data_all = {};
+                    var array_data_all = [];
+
+                    ///VARIABLES PARA LA VARIANZA
+                    var array_variance_header = {};
+                    ///////
+                    array_data.forEach(function (element) {
+                        ////AGRUPAR LOS DATOS PARA LA VARIANZA
+
+                        if ( array_variance_header[array_label[contador]] ){
+                            array_variance_header[array_label[contador]].push(element);
+                        } else {
+                             array_variance_header[array_label[contador]] = [element];
+                        }
+                        /////////////////////////////
+
+                        if (json_group[array_label[contador]]) {
+                            json_group[array_label[contador]] = json_group[array_label[contador]] + element;
+                            json_group_count[array_label[contador]] += 1;
+                        }
+                        else {
+                            json_group[array_label[contador]] = element;
+                            json_group_count[array_label[contador]] = 1;
+                        }
+
+                        //SACAR EL VALOR MAXIMO DE LOS DATOS AGRUPADOS
+                        if (json_max[array_label[contador]]) {
+                            if (json_max[array_label[contador]] < element) {
+                                json_max[array_label[contador]] = element;
+                            }
+                        }
+                        else {
+                            json_max[array_label[contador]] = element;
+                        }
+
+                        //SACAR EL VALOR MINIMO DE LOS DATOS AGRUPADOS
+                        if (json_min[array_label[contador]]) {
+                            if (json_min[array_label[contador]] > element) {
+                                json_min[array_label[contador]] = element;
+                            }
+                        }
+                        else {
+                            json_min[array_label[contador]] = element;
+                        }
+                        //SACAR EL VALOR PRIMERO DE LOS DATOS AGRUPADOS
+                        if (json_first[array_label[contador]]) {
+                            json_first[array_label[contador]] + element;
+                        }
+                        else {
+                            json_first[array_label[contador]] = element;
+                        }
+                        //SACAR EL VALOR ULTIMO DE LOS DATOS AGRUPADOS
+                        if (json_last[array_label[contador]]) {
+                            if (json_last[array_label[contador]] = element) {
+                                json_last[array_label[contador]] = element;
+                            }
+                        }
+                        else {
+                            json_last[array_label[contador]] = element;
+                        }
+
+                        if(json_data_all[array_label[contador]]){
+
+                                json_data_all[array_label[contador]] = json_data_all[array_label[contador]].concat(element) ;
+
+                            }
+                        else {
+                            json_data_all[array_label[contador]] = [element];
+
+                            }
+
+
+                        contador += 1;
+
+                    });
+                    contador = 0;
+                    array_data_all.push(json_data_all);
+
+                    var mean = 0;
+                    var max;
+
+
+                    var json_final_value = {};
+                    var json_final_max = {};
+                    var json_final_min = {};
+                    var json_final_first = {};
+                    var json_final_last = {};
+                    var json_final_mean = {};
+                    var array_json_final_value = [];
+                    var json_median_final={};
+                    var difference=0;
+                    var ret=[];
+                    var array_var=[];
+                    var suma=0;
+                    var median=0;
+                    var values=[];
+                    var json_all={};
+
+                    for (var element in json_group) {
+                        json_final_value['name'] = element;
+                        json_final_value['y'] = json_group[element];
+                        json_final_value['color'] = this.dynamicColors();
+                        array_json_final_value.push(json_final_value);
+                        json_final_value = {}
+
+                        array_group.push(json_group[element]);
+                        array_label_group.push(element);
+
+                        //promedio
+                        mean = (json_group[element] / json_group_count[element]);
+                        json_final_mean['name'] = element;
+                        json_final_mean['y'] = mean;
+                        json_final_mean['color'] = this.dynamicColors();
+                        this.array_group_mean.push(json_final_mean);
+                        json_final_mean = {};
+
+                        //varianza
+                        for (i in json_data_all[element]){
+                            values=json_data_all[element];
+                            difference = Math.pow((json_data_all[element][i]-mean), 2);
+
+                        }
+
+                        //mediana
+                        can=json_data_all[element].length;
+                            values = values.sort(function (a, b) {
+                                return a - b;//ordenar en orden del menor al mayor
+                            })
+                        if (can % 2 != 0) {//cantidad impar
+                            var posMed = (can - 1) / 2;
+                            median = values[posMed];
+                        }
+                        else {//cantidad par
+                            var index = can / 2;
+                            median = (values[index - 1] + values[index]) / 2;
+                        }
+                        json_all[element]=median;
+
+                        json_median_final['name']=element;
+                        json_median_final['y']=json_all[element];
+                        json_median_final['color'] = this.dynamicColors();
+                        this.array_group_median.push(json_median_final);
+                        json_median_final={};
+
+                        //el maximo
+                        json_final_max['name'] = element;
+                        json_final_max['y'] = json_max[element];
+                        json_final_max['color'] = this.dynamicColors();
+                        this.array_group_max.push(json_final_max);
+                        json_final_max = {};
+
+                        //el minimo
+                        json_final_min['name'] = element;
+                        json_final_min['y'] = json_min[element];
+                        json_final_min['color'] = this.dynamicColors();
+                        this.array_group_min.push(json_final_min);
+                        json_final_min = {};
+
+                        //first row
+                        json_final_first['name'] = element;
+                        json_final_first['y'] = json_first[element];
+                        json_final_first['color'] =  this.dynamicColors();
+                        this.array_group_first.push(json_final_first);
+                        json_final_first = {};
+
+                        //last row
+                        json_final_last['name'] = element;
+                        json_final_last['y'] = json_last[element];
+                        json_final_last['color'] =  this.dynamicColors();
+                        this.array_group_last.push(json_final_last);
+                        json_final_last = {};
+
+                    }
+                    this.array_group_json_final = array_json_final_value;
+                    this.array_group_label_final = array_label_group;
+                    this.array_group_value_final = array_group;
+                    this.json_group_count = json_group_count;
+
+                    switch (this.select_option) {
+                        case "1":
+                            //Para calcular el valor maximo del conjunto de datoos
+                            this.getValueMax();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Valor Máximo";
+                            }
+
+                            break;
+                        case "2":
+                            //Para calcular el valor minimo del conjunto de datoos
+                            this.getValueMin();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Valor Mínimo";
+                            }
+                            break;
+                        case "3":
+                            //Para calcular el promedio del conjunto de datos
+                            this.getMean();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Promedio";
+                            }
+                            break;
+                        case "4":
+                            this.getMedian();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Mediana";
+                            }
+
+                            break;
+                        case "5":
+                            //Para calcular la varianza del conjunto de datos
+                            this.getVariance(array_variance_header);
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Varianza";
+                            }
+                            break;
+                        case "6":
+                            //Para calcular la derivacion estandar del conjunto de datos
+                            this.getDst(array_variance_header);
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Desviación Estándar";
+                            }
+
+                            break;
+                        case "7":
+                            this.Mode();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Moda";
+                            }
+                            break;
+                        case "8":
+                            this.first();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Primero";
+                            }
+                            break;
+                        case "9":
+                            this.last();
+                            if (this.title_graph.trim() === "") {
+                                this.title_graph = "Ultimo";
+                            }
+                            break;
+                    }
+                    //titulo para ningun metodo seleccionado
+                    if (this.title_graph.trim() === "") {
+                        this.title_graph = "Datos";
+                    }
+                },
+                //metodo para calcular el promedio del conjunto de datos
+                getMean: function () {
+                    this.array_group_json_final = this.array_group_mean;
+                },
+                //metodo para calcular el valor maximo
+                getValueMax: function () {
+                    this.array_group_json_final = this.array_group_max;
+                },
+                //metodo para calcular el valor minimo
+                getValueMin: function () {
+                    this.array_group_json_final = this.array_group_min;
+                },
+                first: function () {
+                    this.array_group_json_final = this.array_group_first;
+                },
+                last: function () {
+                    this.array_group_json_final = this.array_group_last;
+                },
+                //metodo para calcular la varianza
+                getVariance: function (array_variance_header) {
+                    ///VARIANZA
+                    var json_variance_final = {};
+                    var array_variance_final = [];
+                    var average = 0;
+                    var suma = 0;
+                    var items = 0;
+                    var diferencia = 0;
+                    var result = 0;
+                    for (element in array_variance_header){
+                        console.log(element);
+                        for (i in array_variance_header[element]){
+                            suma += array_variance_header[element][i];
+                            console.log(array_variance_header[element][i]);
+                            items += 1 ;
+                        }
+                        average = ( suma / items);
+
+                        for (i in array_variance_header[element]){
+                            diferencia += Math.pow(array_variance_header[element][i] - average, 2);
+                        }
+
+                        result = diferencia / items;
+                        json_variance_final['name'] = element;
+                        json_variance_final['y'] = result;
+                        json_variance_final['color'] = this.dynamicColors();
+                        array_variance_final.push(json_variance_final);
+                        json_variance_final = {};
+                        average = 0;
+                        suma = 0;
+                        items = 0;
+                        result = 0;
+                        diferencia = 0;
+                    }
+                    this.array_group_json_final = array_variance_final;
+                    console.log(array_variance_final);
+
+                    //////////////
+
+                },
+                getMedian: function () {
+                    this.array_group_json_final = this.array_group_median;
+                   {% comment %} var values = this.chart_data;
+                    var median = 0;
+                    var can = values.length;
+                    values = values.sort(function (a, b) {
+                        return a - b;//ordenar en orden del menor al mayor
+                    })
+                    if (can % 2 != 0) {//cantidad impar
+                        var posMed = (can - 1) / 2;
+                        median = values[posMed];
+                    }
+                    else {//cantidad par
+                        var index = can / 2;
+                        median = (values[index - 1] + values[index]) / 2;
+                    }
+                    this.array_group_label_final = [];
+                    this.array_group_label_final.push("Mediana")
+                    this.array_group_value_final = [];
+                    this.array_group_value_final.push(median);{% endcomment %}
+
+                },
+                getDst: function (array_variance_header) {
+                    ///DESVIACIÓN ESTANDAR
+                    var json_variance_final = {};
+                    var array_variance_final = [];
+                    var average = 0;
+                    var suma = 0;
+                    var items = 0;
+                    var diferencia = 0;
+                    var result = 0;
+                    for (element in array_variance_header){
+                        console.log(element);
+                        for (i in array_variance_header[element]){
+                            suma += array_variance_header[element][i];
+                            console.log(array_variance_header[element][i]);
+                            items += 1 ;
+                        }
+                        average = ( suma / items);
+
+                        for (i in array_variance_header[element]){
+                            diferencia += Math.pow(array_variance_header[element][i] - average, 2);
+                        }
+
+                        result = diferencia / items;
+                        result =  Math.sqrt(result);
+                        json_variance_final['name'] = element;
+                        json_variance_final['y'] = result;
+                        json_variance_final['color'] = this.dynamicColors();
+                        array_variance_final.push(json_variance_final);
+                        json_variance_final = {};
+                        average = 0;
+                        suma = 0;
+                        items = 0;
+                        result = 0;
+                        diferencia = 0;
+                    }
+                    this.array_group_json_final = array_variance_final;
+                    console.log(array_variance_final);
+
+                    /////////////
+
+                },
+                Mode: function () {
+                    //console.log(this.json_group_count);
+                    var max = 0;
+                    this.array_group_label_final = [];
+                    this.array_group_value_final = [];
+                    for (var element in this.json_group_count) {
+                        if (max < this.json_group_count[element]) {
+                            max = this.json_group_count[element];
+                        }
+                    }
+                    //console.log(max);
+
+                    for (var element in this.json_group_count) {
+                        // console.log(this.json_group_count[element]);
+                        //console.log(max);
+                        if (this.json_group_count[element] == max) {
+                            this.array_group_label_final.push(element);
+                            this.array_group_value_final.push(this.json_group_count[element]);
+                        }
+                    }
+                },
+                copyText: function (elemento) {
+                    var $temp = $("<input>")
+                    $("body").append($temp);
+                    $temp.val($(elemento).text()).select();
+                    document.execCommand("copy");
+                    $temp.remove();
+                },
+                generateCode: function (myChart) {
+                    // console.log('si entra');
+                    var svg = myChart.getSVG()
+                        .replace(/</g, '\n&lt;') // make it slightly more readable
+                        .replace(/>/g, '&gt;');
+
+                    document.getElementById('myCode').innerHTML = svg;
+                    this.downloadAvailable = true;
+                },
+                basicChart: function () {
+                    this.groupByJson();
+                    if (this.isBasicChart) {
+                        var myChart = Highcharts.chart('myChart', {
+                            chart: {
+                                type: this.chart_type_name
+                            },
+                            title: {
+                                text: this.title_graph
+                            },
+                            xAxis: {
+                                title: {
+                                    text: this.columns_x[0]['name'],
+                                },
+                                categories: this.array_group_label_final,
+                            },
+                            yAxis: {
+                                title: {
+                                    text: this.columns_y[0]['name'],
+                                }
+                            },
+                            series: [{
+                                //color: this.color,
+                                name: this.columns_y[0]['name'],
+                                data: this.array_group_json_final,
+
+
+                            }]
+                        })
+
+                    };
+                    this.generateCode(myChart);
+                },
+                convertChart: function () {
+                    var url = document.getElementById("myChart").toDataURL();
+                    document.getElementById("url").href = url;
+                }
+            }
+        });
+    </script>
+{% endblock extra-js %}

@@ -1,0 +1,83 @@
+{% extends 'base_admin.html' %}
+{% load i18n static %}
+{% block container %}
+    <div id="app">
+        <h4>{% trans 'Nombre' %}: <b>{{ data.name }}</b></h4>
+        <hr>
+        <div class="row" style="margin-bottom: 20px">
+            <div class="col-lg-6 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form action="." method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="id_name">{% trans 'Nombre' %}</label>
+                                <input type="text" class="form-control" id="id_name" name="name" required
+                                       value="{{ data.name }}">
+                            </div>
+                            <div class="text-right">
+                                <button type="submit" class="btn btn-primary">{% trans 'Actualizar' %}</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-xs-12">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4> {% trans 'Detalle del archivo' %} </h4>
+                        <hr>
+                        <p><b>{% trans 'Fecha de carga' %}:</b> {{ data.timestamp|date:"" }}</p>
+                        <p><b>{% trans 'Ubicación del archivo' %}:</b> {{ data.file.url }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4> {% trans 'Descargar archivos' %} </h4>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 20px">
+                    <div class="col-lg-12">
+                        <a href="{% url 'viewer:graph-file' data.pk 3 %}" class="btn btn-success"><i class="fa fa-bar-chart-o"></i> {% trans 'Construir gráfica' %}</a>
+                        <a href="{{ data.file.url }}" class="btn btn-success"><i class="fa fa-file-excel-o"></i> {% trans 'Excel original' %}</a>
+                        <a href="{% url 'viewer:file-json-download' data.id %}" class="btn btn-info"><i class="fa fa-file-text-o"></i> {% trans 'Datos en JSON' %}</a>
+                    </div>
+                </div>
+{#                <div class="row">#}
+{#                    <div class="col-lg-12">#}
+{#                        <h4 class="text-danger"> {% trans 'Zona peligrosa' %} </h4>#}
+{#                        <hr>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="row text-right">
+                    <div class="col-lg-12">
+                        <a href="#" class="text-danger" data-toggle="modal" data-target="#myModalDelete"><i class="fa fa-info-circle"></i> {% trans 'Eliminar registro' %}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Modal eliminar -->
+        <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{% trans '¿Está seguro de eliminar?' %}</h4>
+                    </div>
+                    <div class="modal-body">
+                        {% trans 'Todos los registros asociados a este archivo serán eliminados permanentemente' %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Cancelar' %}</button>
+                        <a href="{% url 'viewer:file-delete' data.id %}" class="btn btn-danger">{% trans 'Sí, deseo eliminar' %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock container %}

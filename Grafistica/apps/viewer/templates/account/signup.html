@@ -1,0 +1,135 @@
+{#{% extends "account/base.html" %}#}
+{##}
+{#{% load i18n %}#}
+{##}
+{#{% block head_title %}{% trans "Signup" %}{% endblock %}#}
+{##}
+{#{% block content %}#}
+{#<h1>{% trans "Sign Up" %}</h1>#}
+{##}
+{#<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>#}
+{##}
+{#<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">#}
+{#  {% csrf_token %}#}
+{#  {{ form.as_p }}#}
+{#  {% if redirect_field_value %}#}
+{#  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />#}
+{#  {% endif %}#}
+{#  <button type="submit">{% trans "Sign Up" %} &raquo;</button>#}
+{#</form>#}
+{##}
+{#{% endblock %}#}
+<!DOCTYPE html>
+<html>
+{% load i18n static %}
+<head>
+    <link href="{% static 'img/favicon-grafistica.png' %}" rel="icon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!-- Font-icon css-->
+    <link rel="stylesheet" type="text/css"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Grafística</title>
+</head>
+<body>
+<section class="material-half-bg">
+    <div class="cover"></div>
+</section>
+<section class="login-content">
+    {#      <div class="logo">#}
+    {#        <h1>Grafística</h1>#}
+    {#      </div>#}
+    <div class="login-box">
+        <form class="login-form" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {% if next_url %}
+                <input type="hidden" name="next" value="{{ next_url }}">
+            {% endif %}
+            <a href="/">
+                <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Grafística</h3>
+            </a>
+            <div class="form-group">
+                <label class="control-label">{% trans 'Usuario' %}</label>
+                <input class="form-control" name="username" id="id_username" type="text"
+                       placeholder="{% trans 'Usuario' %}" autofocus>
+                {% for error in form.username.errors %}
+                    <div style="margin-top: 10px">
+                        <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="control-label">{% trans 'Correo' %}</label>
+                <input class="form-control" name="email" id="id_email" type="email" placeholder="{% trans 'Correo' %}">
+                {% for error in form.email.errors %}
+                    <div style="margin-top: 10px">
+                        <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="control-label">{% trans 'Contraseña' %}</label>
+                <input class="form-control" name="password1" id="id_password1" type="password"
+                       placeholder="{% trans 'Contraseña' %}">
+                {% for error in form.password1.errors %}
+                    <div style="margin-top: 10px">
+                        <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <label class="control-label">{% trans 'Repetir contraseña' %}</label>
+                <input class="form-control" name="password2" id="id_password2" type="password"
+                       placeholder="{% trans 'Repetir contraseña' %}">
+                {% for error in form.password2.errors %}
+                    <div style="margin-top: 10px">
+                        <small style="font-size: 70%" class="text-danger">* {{ error }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-group btn-container">
+                <input type="submit" class="btn btn-primary btn-block" value="{% trans 'Registrar' %}">
+                {#               <p class="semibold-text mb-2"><a href="#" data-toggle="flip">{% trans 'Recuperar contraseña' %}</a></p>#}
+            </div>
+            <div class="form-group mt-3">
+                <p class="semibold-text mb-0"><a href="{% url 'viewer:login' %}"><i
+                        class="fa fa-angle-left fa-fw"></i>{% trans 'Regresar' %}</a></p>
+            </div>
+        </form>
+    </div>
+</section>
+<style>
+    .login-content .login-box {
+    position: relative;
+    min-width: 450px;
+    min-height: 550px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 29px 147.5px 102.5px rgba(0, 0, 0, 0.05), 0px 29px 95px 0px rgba(0, 0, 0, 0.16);
+    box-shadow: 0px 29px 147.5px 102.5px rgba(0, 0, 0, 0.05), 0px 29px 95px 0px rgba(0, 0, 0, 0.16);
+    -webkit-perspective: 800px;
+    perspective: 800px;
+    -webkit-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;opacity: 
+}
+</style>
+<!-- Essential javascripts for application to work-->
+<script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<!-- The javascript plugin to display page loading on top-->
+<script src="{% static 'js/plugins/pace.min.js' %}"></script>
+<script type="text/javascript">
+    // Login Page Flipbox control
+    $('.login-content [data-toggle="flip"]').click(function () {
+        $('.login-box').toggleClass('flipped');
+        return false;
+    });
+</script>
+</body>
+</html>

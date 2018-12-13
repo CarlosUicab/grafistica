@@ -1,0 +1,29 @@
+{
+  "name": "grafistica",
+  "version": "1.0.0",
+  "description": "### Proyecto WEB.",
+  "private": true,
+  "scripts": {
+    "dist": "webpack --mode=production",
+    "dev": "webpack --mode=development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ajv": "6.5.2",
+    "argsert": "^1.0.9",
+    "lodash": "^4.17.10",
+    "mathjs": "^5.1.2",
+    "pip": "0.0.1",
+    "python": "0.0.4",
+    "vue": "2.5.16",
+    "vue-rate-it": "^2.1.0",
+    "vue-resource": "1.5.1"
+  },
+  "devDependencies": {
+    "html-loader": "^0.5.5",
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
+  }
+}
