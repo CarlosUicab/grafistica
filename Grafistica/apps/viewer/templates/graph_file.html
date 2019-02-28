@@ -374,22 +374,20 @@
 
 {% endblock container %}
 {% block extra-js %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.min.js"></script>
+     <script src="{% static 'node_modules/jquery/dist/jquery.min.js' %}"></script>
+     <script src="{% static 'node_modules/vue/dist/vue.min.js' %}"></script>
     <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>
+{#    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.7.0/Sortable.min.js"></script>#}
+    <script src="{% static 'node_modules/sortablejs/Sortable.min.js' %}"></script>
     <!-- CDNJS :: Vue.Draggable (https://cdnjs.com/) -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.15.0/vuedraggable.min.js"></script>
-    {#    <script src="{% static  'bower_components/vue/dist/vue.min.js' %}"></script>#}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+{#    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.15.0/vuedraggable.min.js"></script>#}
+    <script src="{% static 'js/vuedraggable.min.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/highcharts.js' %}"></script>
+     <script src="{% static 'node_modules/highcharts/modules/series-label.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/modules/exporting.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/modules/export-data.js' %}"></script>
+    <script src="{% static 'node_modules/highcharts/highcharts-more.js' %}"></script>
 
-
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script>
 
         // 1 = line
